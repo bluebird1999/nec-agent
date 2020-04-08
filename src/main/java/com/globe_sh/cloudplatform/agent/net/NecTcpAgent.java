@@ -44,8 +44,8 @@ public class NecTcpAgent {
 								@Override
 								public void initChannel(SocketChannel ch) throws Exception {
 									ByteBuf delimiter = Unpooled.copiedBuffer("##".getBytes());
-									ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
-									//一包数据的最大长度不会超过1024,若超过则需调整此参数
+									ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1500,delimiter));
+									//一包数据的最大长度不会超过1500,若超过则需调整此参数
 									ch.pipeline().addLast(new NecTcpAgentHandler());
 									//ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
 								}

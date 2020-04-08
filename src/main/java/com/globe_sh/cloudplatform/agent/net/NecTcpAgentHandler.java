@@ -29,6 +29,10 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 		ByteBuf result = (ByteBuf)msg;
 		byte[] data = new byte[result.readableBytes()];
 		result.readBytes(data);
+		if( data.length <=0 ) {
+			logger.info("Find empty message, return...");
+			return;
+		}
 		logger.info("Receive Data Content: " + StaticMethod.bytesToHexString(data));
 		byte[] newdata = new byte[data.length + 2];
 		newdata[0] = 0x23;
@@ -94,6 +98,7 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		cause.printStackTrace();
 		String clientId = ctx.channel().id().asLongText();
+		logger.info("Cause: " + cause.getMessage());
 		logger.info("Channel Exception Caught,Client ID: " + clientId);
 		NecConnectionManager.getInstance().remove((SocketChannel)ctx.channel());
 		ctx.close();

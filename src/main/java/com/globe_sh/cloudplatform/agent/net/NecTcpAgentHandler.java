@@ -72,14 +72,14 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 	
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		byte[] data = new byte[26];
+		byte[] data = new byte[22];
 		data[0] = 0x23;
 		data[1] = 0x23;
 		data[2] = 0x40;//通知server关闭连接
-		data[23] = 0x01;
-		data[24] = 0x7F;//随便设一个数据
+		data[19] = 0x01;
+		data[20] = 0x7F;//随便设一个数据
 		byte crc8 = CRC8.calcCrc8WithoutPrefix(data);
-		data[25] = crc8;
+		data[21] = crc8;
 		String clientId = ctx.channel().id().asLongText();
 		logger.info("Channel InActive,Client ID: " + clientId);
 		DataPackage dataPackage = new DataPackage(clientId, data, (SocketChannel)ctx.channel());

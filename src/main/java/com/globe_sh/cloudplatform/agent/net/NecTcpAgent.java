@@ -50,7 +50,7 @@ public class NecTcpAgent {
 									//ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
 								}
 							})
-							.option(ChannelOption.SO_BACKLOG, 1024)
+							.option(ChannelOption.SO_BACKLOG, 1500)
 							.option(ChannelOption.TCP_NODELAY, true)
 							.childOption(ChannelOption.SO_KEEPALIVE, true);
 					ChannelFuture f = b.bind().sync();

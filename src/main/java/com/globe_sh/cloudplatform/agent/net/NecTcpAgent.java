@@ -44,13 +44,13 @@ public class NecTcpAgent {
 								@Override
 								public void initChannel(SocketChannel ch) throws Exception {
 									ByteBuf delimiter = Unpooled.copiedBuffer("##".getBytes());
-									ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1500,delimiter));
-									//一包数据的最大长度不会超过1500,若超过则需调整此参数
+									ch.pipeline().addLast(new DelimiterBasedFrameDecoder(4096,delimiter));
+									//一包数据的最大长度不会超过4096,若超过则需调整此参数
 									ch.pipeline().addLast(new NecTcpAgentHandler());
 									//ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
 								}
 							})
-							.option(ChannelOption.SO_BACKLOG, 1500)
+							.option(ChannelOption.SO_BACKLOG, 4096)
 							.option(ChannelOption.TCP_NODELAY, true)
 							.childOption(ChannelOption.SO_KEEPALIVE, true);
 					ChannelFuture f = b.bind().sync();

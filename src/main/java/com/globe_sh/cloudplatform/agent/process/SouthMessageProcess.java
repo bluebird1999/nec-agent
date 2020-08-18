@@ -32,9 +32,9 @@ public class SouthMessageProcess implements Processor {
 				appendedData[data.length + 1 ] = 0x23;					
 				logger.info("To Device Data: " + StaticMethod.bytesToHexString(appendedData));
 				SocketChannel channel = NecConnectionManager.getInstance().getChannel(clientId);
-				if(channel != null) {
-					logger.info("Send By Socket Channel: " + clientId);				
-					channel.writeAndFlush(Unpooled.copiedBuffer(appendedData));
+				if(channel != null && channel.isWritable()) {
+						logger.info("Send By Socket Channel: " + clientId);				
+						channel.writeAndFlush(Unpooled.copiedBuffer(appendedData));
 				} else {
 					logger.info("Cannot Find The Client Socket Channel: " + clientId);
 				}

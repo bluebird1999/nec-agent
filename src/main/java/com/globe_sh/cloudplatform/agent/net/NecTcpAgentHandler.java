@@ -15,6 +15,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.util.ReferenceCountUtil;
 
 public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 
@@ -49,6 +50,9 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 			String hexString = StaticMethod.bytesToHexString(data);
 			logger.warn("Client ID: " + clientId + "\tInvalid Data: " + hexString);
 		}
+		
+		System.gc();
+		ReferenceCountUtil.release(msg);
 	}
 	
 	@Override

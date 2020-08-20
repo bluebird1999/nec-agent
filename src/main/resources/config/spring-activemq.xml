@@ -9,7 +9,7 @@
   	http://activemq.apache.org/schema/core 
   	http://activemq.apache.org/schema/core/activemq-core.xsd">
 
-	<bean id="dataNorth" class="org.apache.activemq.command.ActiveMQTopic">
+	<bean id="dataNorth" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="data-north" />
 	</bean>
 

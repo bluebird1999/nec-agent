@@ -26,14 +26,21 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 	 * */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		super.channelRead(ctx,msg);
+	}
+	
+	@Override
+	public void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+//		logger.info("channelRead0......");
 		logger.info("Receive Data Package......"); 
 		ByteBuf result = (ByteBuf)msg;
 		byte[] data = new byte[result.readableBytes()];
 		result.readBytes(data);
-		if( data.length <=0 ) {
+/*		if( data.length <=0 ) {
 			logger.info("Find empty message, return...");
 			return;
 		}
+*/
 		logger.info("Receive Data Content: " + StaticMethod.bytesToHexString(data));
 		byte[] newdata = new byte[data.length + 2];
 		newdata[0] = 0x23;
@@ -50,14 +57,8 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 			String hexString = StaticMethod.bytesToHexString(data);
 			logger.warn("Client ID: " + clientId + "\tInvalid Data: " + hexString);
 		}
-		
-		System.gc();
-		ReferenceCountUtil.release(msg);
-	}
-	
-	@Override
-	public void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-		logger.info("channelRead0......");
+//		System.gc();
+//		ReferenceCountUtil.release(msg);		
 	}
 	
 	@Override

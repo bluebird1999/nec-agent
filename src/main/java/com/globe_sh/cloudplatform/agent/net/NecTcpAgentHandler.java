@@ -41,7 +41,7 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 			return;
 		}
 
-		logger.info("Receive Data Content: " + StaticMethod.bytesToHexString(data));
+//		logger.info("Receive Data Content: " + StaticMethod.bytesToHexString(data));
 		byte[] newdata = new byte[data.length + 2];
 		newdata[0] = 0x23;
 		newdata[1] = 0x23;
@@ -54,8 +54,9 @@ public class NecTcpAgentHandler extends SimpleChannelInboundHandler<Object> {
 			ActivemqOperater.getInstance().sendMessageDefault(dataPackage.getTargetData());
 			logger.info("Authentication Success, Client ID: " + clientId);
 		} else {
-			String hexString = StaticMethod.bytesToHexString(data);
-			logger.warn("Client ID: " + clientId + "\tInvalid Data: " + hexString);
+//			String hexString = StaticMethod.bytesToHexString(data);
+//			logger.warn("Client ID: " + clientId + "\tInvalid Data: " + hexString);
+			logger.warn("Client ID: " + clientId + "\tInvalid Data: ");
 		}
 //		System.gc();
 //		ReferenceCountUtil.release(msg);		
